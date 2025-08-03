@@ -1,43 +1,8 @@
-import random
-import requests
-import time
-
-# Your Telegram bot token and chat ID
-TELEGRAM_TOKEN = "7682643743:AAFK0Bh4Fhv8ufej4leP6NmHshYFuQk4aZw"  # 🔁 Replace this
-CHAT_ID = "5455249197"
-
-# Fake candle data generator (simulates Pocket Option data)
-def fetch_market_data():
-    return {
-        "open": round(random.uniform(1.1000, 1.1100), 5),
-        "close": round(random.uniform(1.1000, 1.1100), 5)
-    }
-
-# Signal generation logic
-def generate_signal():
-    data = fetch_market_data()
-    print(f"Candle - Open: {data['open']}, Close: {data['close']}")
-
-    if data['close'] > data['open']:
-        return "CALL"
-    else:
-        return "PUT"
-
-# Send signal to Telegram
-def send_signal_to_telegram(signal):
-    message = f"📊 Pocket Option Signal:\n👉 {signal}"
-    url = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage"
-    payload = {
-        "chat_id": CHAT_ID,
-        "text": message
-    }
-    response = requests.post(url, data=payload)
-    print(f"Telegram Status: {response.status_code} - {response.text}")
-
-# Main execution
-if __name__ == "__main__":
-    while True:
-        signal = generate_signal()
-        print(f"Generated Signal: {signal}")
-        send_signal_to_telegram(signal)
-        time.sleep(60)  # Send every 60 seconds (change as needed)
+services:
+  - type: web
+    name: AATraders
+    env: python
+    buildCommand: ""        # <== This skips the build command
+    startCommand: python main.py
+    plan: free
+    autoDeploy: true
