@@ -1,8 +1,1 @@
-
 python-telegram-bot==20.3
-# add other libraries here
-aiohttp==3.9.5
-pytz
-fastapi==0.110.0
-uvicorn==0.29.0
-
